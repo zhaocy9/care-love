@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>来自赵某的关心</title>
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: "微软雅黑", sans-serif;
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffe4e1; /* 浅粉色背景 */
+    position: relative;
+}
+
+/* 弹窗样式 */
+.tip {
+    position: fixed;
+    max-width: 350px;
+    min-width: 250px;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 20px;
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: 9999;
+    word-wrap: break-word;
+}
+
+/* 粉红爱心波纹动画 */
+.heart {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    width: 20px;
+    height: 20px;
+    transform-origin: center;
+    animation: ripple 1s ease-out forwards;
+}
+
+@keyframes ripple {
+    0% { transform: scale(0.5); opacity: 0.8; }
+    50% { transform: scale(1.5); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
+}
+
+/* 手机端自适应 */
+@media screen and (max-width: 480px) {
+    .tip {
+        max-width: 95%;
+        font-size: 22px;
+        padding: 25px;
+    }
+}
+</style>
+</head>
+<body>
+
+<script>
+// 温馨提示文本
+const tips = [
+    '多喝水哦~ 💧','保持微笑呀 😊','每天都要元气满满 💪',
+    '记得吃水果 🍎','保持好心情 🌸','好好爱自己 ❤️','我想你了 🥰',
+    '梦想成真 ✨','期待下一次见面 🤗','金榜题名 🎉',
+    '顺顺利利 🍀','早点休息 😴','愿所有烦恼都消失 💭',
+    '别熬夜 🌙','今天过得开心嘛 😄','天冷了，多穿衣服 🧣',
+    '生活美美的 🌷','勇敢一点 💖','加油！ 💪','开心每一天 😘',
+    '幸福满满 🥳','笑口常开 😁','心想事成 🌈','好运连连 🍀',
+    '保持耐心 ⏳','相信自己 💯','每一天都是新的开始 🌞',
+    '小心心送你 💕','遇见美好 🌸','快快乐乐 😆','今天也要元气满满 🔥'
+];
+
+// 弹窗背景颜色
+const colors = ['#ffffff','#fff0f5','#ffe4e1','#fffaf0','#fdf5e6'];
+let tipCount = 0;
+const maxTips = 200;
+
+// 创建弹窗
+function createTip(){
+    if(tipCount >= maxTips) return;
+
+    const div = document.createElement('div');
+    div.className = 'tip';
+    div.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+    div.textContent = tips[Math.floor(Math.random()*tips.length)];
+
+    // 随机全屏位置，保证覆盖左右边界
+    const maxX = window.innerWidth - 350;
+    const maxY = window.innerHeight - 100;
+    const left = Math.random() * maxX;
+    const top = Math.random() * maxY;
+    div.style.left = left + 'px';
+    div.style.top = top + 'px';
+
+    document.body.appendChild(div);
+    setTimeout(() => { div.style.opacity = 1; }, 50);
+
+    tipCount++;
+}
+
+// 创建粉红爱心波纹
+function createHeart(){
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    // 使用SVG画爱心
+    heart.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20">
+        <path fill="#ffb6c1" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+        2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3
+        19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>`;
+
+    // 随机全屏位置
+    const size = 12 + Math.random()*15;
+    heart.style.width = size + 'px';
+    heart.style.height = size + 'px';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.top = Math.random() * window.innerHeight + 'px';
+
+    document.body.appendChild(heart);
+
+    // 动画完成后移除
+    setTimeout(() => heart.remove(), 1000);
+}
+
+// 弹窗定时生成
+setInterval(createTip, 100); // 每100ms生成一个弹窗
+
+// 爱心定时生成
+setInterval(createHeart, 200); // 每200ms生成一个爱心波纹
+</script>
+</body>
+</html>
