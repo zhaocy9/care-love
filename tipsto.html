@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>来自赵某的关心</title>
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: "微软雅黑", sans-serif;
+    height: 100vh;
+    width: 100vw;
+    /* 浅粉色背景 */
+    background-color: #ffe4e1;
+}
+
+/* 弹窗样式 */
+.tip {
+    position: fixed;
+    max-width: 350px;      /* 弹窗更大 */
+    min-width: 250px;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+    padding: 20px;         /* 内边距增大 */
+    box-sizing: border-box;
+    font-size: 20px;       /* 字体更大 */
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: all 0.5s ease;
+    z-index: 9999;
+    word-wrap: break-word;
+    animation: float 3s ease-in-out infinite alternate;
+}
+
+/* 漂浮动画 */
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+
+/* 手机端自适应 */
+@media screen and (max-width: 480px) {
+    .tip {
+        max-width: 95%;     /* 手机屏幕宽度占比 */
+        font-size: 22px;    /* 字体更大 */
+        padding: 25px;
+    }
+}
+</style>
+</head>
+<body>
+
+<script>
+const tips = [
+    '多喝水哦~ 💧','保持微笑呀 😊','每天都要元气满满 💪',
+    '记得吃水果 🍎','保持好心情 🌸','好好爱自己 ❤️','我想你了 🥰',
+    '梦想成真 ✨','期待下一次见面 🤗','金榜题名 🎉',
+    '顺顺利利 🍀','早点休息 😴','愿所有烦恼都消失 💭',
+    '别熬夜 🌙','今天过得开心嘛 😄','天冷了，多穿衣服 🧣',
+    '生活美美的 🌷','勇敢一点 💖','加油！ 💪','开心每一天 😘',
+    '幸福满满 🥳','笑口常开 😁','心想事成 🌈','好运连连 🍀',
+    '保持耐心 ⏳','相信自己 💯','每一天都是新的开始 🌞',
+    '小心心送你 💕','遇见美好 🌸','快快乐乐 😆','今天也要元气满满 🔥'
+];
+
+const colors = ['#ffffff','#fff0f5','#ffe4e1','#fffaf0','#fdf5e6'];
+
+function createTip() {
+    const tipText = tips[Math.floor(Math.random() * tips.length)];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    const div = document.createElement('div');
+    div.className = 'tip';
+    div.style.backgroundColor = color;
+    div.textContent = tipText;
+
+    // 随机位置
+    const maxX = window.innerWidth - 350;
+    const maxY = window.innerHeight - 100;
+    div.style.left = Math.random() * maxX + 'px';
+    div.style.top = Math.random() * maxY + 'px';
+
+    document.body.appendChild(div);
+
+    // 飞入动画
+    setTimeout(() => {
+        div.style.opacity = 1;
+        div.style.transform = 'translateY(0)';
+    }, 50);
+}
+
+// 弹窗数量
+const totalTips = 520;
+let count = 0;
+
+const interval = setInterval(() => {
+    if(count >= totalTips){
+        clearInterval(interval);
+        return;
+    }
+    createTip();
+    count++;
+}, 50); // 每50毫秒生成一个弹窗
+
+</script>
+</body>
+</html>
